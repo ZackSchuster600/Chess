@@ -5,6 +5,7 @@ public class Board {
 
     ArrayList<Piece> boardPieces = new ArrayList<Piece>();
     ArrayList<Piece> removedPieces = new ArrayList<Piece>();
+    PieceComparator sorter = new PieceComparator();
 
     public Board() {
 
@@ -17,13 +18,13 @@ public class Board {
 
     public boolean addPiece(Piece newPiece) {
         if(squareContains(newPiece.getRow(), newPiece.getCol()) != null) {
+            boardPieces.sort(new PieceComparator());
             return false;
         } else {
             boardPieces.add(newPiece);
-            boardPieces.sort(new PieceComparator());
+            boardPieces.sort(sorter);
             return true;
         }
-
     }
 
 
@@ -53,6 +54,12 @@ public class Board {
         System.out.println("|Column 0 |Column 1 |Column 2 |Column 3 |Column 4 |Column 5 |Column 6 |Column 7 |");
     }
 
+    public void printPieces() {
+        for(Piece piece: boardPieces) {
+            System.out.println(""+piece.getColor()+" "+piece.toString()+" on "+piece.getRow()+piece.getCol());
+        }
+    }
+
     public Piece squareContains(int row, int col) {
         for(int i=0; i< boardPieces.size(); i++) {
             if (((Piece)boardPieces.get(i)).isInSquare(row, col)) {
@@ -69,10 +76,12 @@ public class Board {
                 if(squareContains(oldRow, oldCol).getColor().equals(color)) {
                     clearSquare(newRow, newCol);
                     squareContains(oldRow, oldCol).movePiece(newRow, newCol);
+                    boardPieces.sort(sorter);
                     return true;
                 }
             }
         }
+        boardPieces.sort(sorter);
         return false;
     }
 
@@ -81,6 +90,7 @@ public class Board {
             removedPieces.add(squareContains(row, col));
             boardPieces.remove(squareContains(row, col));
         }
+        boardPieces.sort(sorter);
     }
 
     public boolean isInCheck(String color) {
@@ -89,15 +99,16 @@ public class Board {
             if(boardPieces.get(i).getType() == "King") {
                 if(boardPieces.get(i).getColor().equals(color)) {
                     Piece king = boardPieces.get(i);
-                    for(Piece piece: boardPieces) {
-                        if(piece.isLegalMove(this, king.getRow(), king.getCol())) {
+                    for(int j=0; j<boardPieces.size(); j++) {
+                        if(boardPieces.get(j).isLegalMove(this, king.getRow(), king.getCol())) {
+                            boardPieces.sort(sorter);
                             return true;
                         }
                     }
                 }
             }
         }
-
+        boardPieces.sort(sorter);
         return false;
     }
 

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -7,6 +8,8 @@ public class Main {
         Board board = new Board();
         AIPlayer ai = new AIPlayer(board, "black");
         Scanner scanner = new Scanner(System.in);
+        ArrayList<Move> completedMoves = new ArrayList<Move>();
+        Move nextMove;
 
         System.out.println(new King(0, 0, "white").getClass());
         board.addPiece(new Pawn(1, 0, "black"));
@@ -65,17 +68,26 @@ public class Main {
                 System.out.println("Black's Turn----");
             }
 
+
+
             if(turn % 2 == 0) {
-                if(board.movePiece(oldRow, oldCol, newRow, newCol, "white")) {
+                if(board.squareContains(oldRow, oldCol).isLegalMove(board, newRow, newCol)) {
+                    nextMove = new Move(board.squareContains(oldRow, oldCol), newRow, newCol);
+                    nextMove.doMove(board);
+                    completedMoves.add(nextMove);
                     turn = turn + 1;
-                } else {
+                }
+                else {
                     System.out.println("Invalid move, try again.");
                 }
             } else {
-                ai.randomMove(board).doMove(board);
+                nextMove = ai.randomMove(board);
+                nextMove.doMove(board);
+                completedMoves.add(nextMove);
                 turn = turn + 1;
             }
             board.printBoard();
+            board.printPieces();
         }
 
 

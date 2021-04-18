@@ -58,12 +58,10 @@ public class Piece {
     }
 
     public boolean badCheckMove(Board board, int row, int col) {
-
-        Board board1 = board.clone();
         Move move = new Move(this, row, col);
-        move.doMove(board1);
+        move.doMove(board);
         boolean check = board.isInCheck(this.color);
-        move.undoMove(board1);
+        move.undoMove(board);
         return check;
     }
 

@@ -16,20 +16,24 @@ public class AIPlayer {
     public Move randomMove(Board board) {
         ArrayList<Move> possibleMoves = new ArrayList<Move>();
 
-        for(Piece piece: board.boardPieces) {
-            Board board1 = board.clone();
-            Piece lol = piece.clone();
-            if(piece.getColor().equals(color)) {
-                for(int i=0; i<7; i++) {
-                    for(int j=0; j<7; j++) {
-                        if(lol.isLegalMove(board1, i, j)) {
-                            possibleMoves.add(new Move(piece, i, j));
+        for(int a=0; a<board.boardPieces.size(); a++) {
+            if(board.boardPieces.get(a).getColor().equals(color)) {
+                System.out.println(""+board.boardPieces.get(a).getColor()+" and "+color);
+                for(int i=0; i<8; i++) {
+                    for(int j=0; j<8; j++) {
+                        if(board.boardPieces.get(a).isLegalMove(board, i, j)) {
+                            possibleMoves.add(new Move(board.boardPieces.get(a), i, j));
                         }
                     }
                 }
             }
         }
-        return possibleMoves.get(random.nextInt(possibleMoves.size()));
+        if(possibleMoves.size() > 0) {
+            return possibleMoves.get(random.nextInt(possibleMoves.size()));
+        } else {
+            System.out.println("No legal moves found");
+            return null;
+        }
     }
 
 

@@ -24,6 +24,8 @@ public class Move {
             takenPiece = board.squareContains(newRow, newCol);
             board.clearSquare(newRow, newCol);
         }
+        System.out.println("Piece "+thisPiece.toString()+" at "+oldRow+","+oldCol+
+        " to "+newRow+","+newCol);
         thisPiece.movePiece(newRow, newCol);
     }
 

@@ -15,10 +15,10 @@ public class Knight extends Piece {
     }
 
     public boolean isLegalMove(Board board, int row, int col) {
-        if(row > 7 || row < 0) {
+        if(row > 8 || row < 0) {
             return false;
         }
-        if(col > 7 || row < 0) {
+        if(col > 8 || row < 0) {
             return false;
         }
 

@@ -17,6 +17,8 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isLegalMove(Board board, int row, int col) {
+
+        // If rows or columns are outside of board return false
         if(row > 7 || row < 0) {
             return false;
         }
@@ -24,7 +26,9 @@ public class Pawn extends Piece {
             return false;
         }
 
+        // Checks for black pieces, returning false if you are in check after the move
         if(color.equals("black")) {
+            // if in same column moving one square towards an empty space return true
             if(col == this.col && row == (this.row+ 1) ) {
                 if(board.squareContains(row, col) == null) {
                     if(badCheckMove(board, row, col)) {
@@ -33,6 +37,7 @@ public class Pawn extends Piece {
                     return true;
                 }
             }
+            // if moving diagonally into a white occupied square return true
             if(Math.abs(col - this.col) == 1 && row == (this.row + 1)) {
                 if(board.squareContains(row, col) != null) {
                     if(board.squareContains(row, col).getColor().equals("white")) {
@@ -43,6 +48,7 @@ public class Pawn extends Piece {
                     }
                 }
             }
+            // if moving exactly two squares from its starting spot, return true
             if(this.row == 1 && row == 3 && this.col == col) {
                 if(board.squareContains(this.row + 1, col) == null) {
                     if(board.squareContains(row, col) == null) {
@@ -56,6 +62,7 @@ public class Pawn extends Piece {
             return false;
         }
 
+        // Same checks for white pieces, rows reversed
         if(color.equals("white")) {
             if(col == this.col && row == (this.row-1)) {
                 if(board.squareContains(row, col) == null) {

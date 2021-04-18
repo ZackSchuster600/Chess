@@ -18,6 +18,7 @@ public class Bishop extends Piece {
 
     public boolean isLegalMove( Board board, int row, int col) {
 
+
         if(this.row == row || this.col == col){
             //Did not move diagonally
             return false;
