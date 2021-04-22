@@ -2,6 +2,7 @@ public class Queen extends Piece{
 
     public Queen(int row, int col, String color) {
         super(row, col, color);
+        pieceValue = 90;
     }
 
 
@@ -20,6 +21,13 @@ public class Queen extends Piece{
             if(badCheckMove(board, row, col)) {
                 return false;
             }
+            return true;
+        }
+        return false;
+    }
+
+    public boolean legalIgnoreCheck(Board board, int row, int col) {
+        if(isRookMove(board, row, col) || isBishopMove(board, row, col)) {
             return true;
         }
         return false;

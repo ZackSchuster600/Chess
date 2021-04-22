@@ -2,7 +2,6 @@ public class Todo {
 
     /**
      *
-     * sometimes black says it can move white pieces
      * en passant
      * pawns cant move if put into check
      * knights can't move if put into check
@@ -15,6 +14,10 @@ public class Todo {
      *
      *
      *
+     *What to care about for bot
+     * - Piece values
+     * - position for most squares it can attack
+     * - lightly prioritize putting them in check
      *
      *
      *

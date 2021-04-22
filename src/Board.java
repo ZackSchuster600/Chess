@@ -100,7 +100,7 @@ public class Board {
                 if(boardPieces.get(i).getColor().equals(color)) {
                     Piece king = boardPieces.get(i);
                     for(int j=0; j<boardPieces.size(); j++) {
-                        if(boardPieces.get(j).isLegalMove(this, king.getRow(), king.getCol())) {
+                        if(boardPieces.get(j).legalIgnoreCheck(this, king.getRow(), king.getCol())) {
                             boardPieces.sort(sorter);
                             return true;
                         }
@@ -110,6 +110,17 @@ public class Board {
         }
         boardPieces.sort(sorter);
         return false;
+    }
+
+    public King getKing(String color) {
+        for(int i=0; i<boardPieces.size(); i++) {
+            if(boardPieces.get(i).getType().equals("King")) {
+                if(boardPieces.get(i).getColor().equals(color)) {
+                    return (King) boardPieces.get(i);
+                }
+            }
+        }
+        return null;
     }
 
 

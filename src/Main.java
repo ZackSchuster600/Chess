@@ -1,13 +1,16 @@
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.awt.Robot;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AWTException {
 
         Board board = new Board();
         AIPlayer ai = new AIPlayer(board, "black");
         Scanner scanner = new Scanner(System.in);
+        Robot robot = new Robot();
         ArrayList<Move> completedMoves = new ArrayList<Move>();
         Move nextMove;
 
@@ -54,6 +57,7 @@ public class Main {
 
         while(!board.gameIsOver()) {
             if(turn % 2 == 0) {
+                System.out.println("White's turn ");
                 System.out.println("Piece to move's Row:");
                 oldRow = scanner.nextInt();
                 System.out.println("Piece to move's Column:");
@@ -64,30 +68,52 @@ public class Main {
                 System.out.println("Piece's new Column:");
                 newCol = scanner.nextInt();
                 System.out.println(""+board.squareContains(newRow, newCol));
+                System.out.println("Black's turn");
             } else {
-                System.out.println("Black's Turn----");
+                  System.out.println("Black's Turn----");
+                  robot.delay(2500);
             }
-
-
 
             if(turn % 2 == 0) {
                 if(board.squareContains(oldRow, oldCol).isLegalMove(board, newRow, newCol)) {
-                    nextMove = new Move(board.squareContains(oldRow, oldCol), newRow, newCol);
-                    nextMove.doMove(board);
-                    completedMoves.add(nextMove);
-                    turn = turn + 1;
+                    if(board.getKing("white").canCastleKingside(board) && oldRow == 7 && oldCol == 4 && newRow == 7 && newCol == 6) {
+                        nextMove = new KingCastleMove(board.getKing("white"));
+                        nextMove.doMove(board);
+                        completedMoves.add(nextMove);
+                        turn = turn + 1;
+                    } else if(board.getKing("white").canCastleQueenside(board) && oldRow == 7 && oldCol == 4 && newRow == 7 && newCol == 2) {
+                        nextMove = new QueenCastleMove(board.getKing("white"));
+                        nextMove.doMove(board);
+                        completedMoves.add(nextMove);
+                        turn = turn + 1;
+                    }
+                    else {
+                        nextMove = new Move(board.squareContains(oldRow, oldCol), newRow, newCol);
+                        nextMove.doMove(board);
+                        completedMoves.add(nextMove);
+                        turn = turn + 1;
+                    }
                 }
                 else {
                     System.out.println("Invalid move, try again.");
                 }
+
             } else {
+                /**if(board.squareContains(oldRow, oldCol).isLegalMove(board, newRow, newCol)) {
+                    nextMove = new Move(board.squareContains(oldRow, oldCol), newRow, newCol);
+                    nextMove.doMove(board);
+                    completedMoves.add(nextMove);
+                    turn = turn + 1;
+                } **/
                 nextMove = ai.randomMove(board);
+                //nextMove = ai.getBestMove(0, 16, board, new AIPlayer(board, "white"), new Move());
                 nextMove.doMove(board);
                 completedMoves.add(nextMove);
+
                 turn = turn + 1;
             }
             board.printBoard();
-            board.printPieces();
+            robot.delay(70);
         }
 
 

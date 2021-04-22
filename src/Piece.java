@@ -4,6 +4,8 @@ public class Piece {
 
     int row = -1;
     int col = -1;
+    int timesMoved = 0;
+    int pieceValue;
     String color = "none";
 
 
@@ -53,8 +55,18 @@ public class Piece {
         return false;
     }
 
+    public boolean legalIgnoreCheck(Board board, int newRow, int newCol) { return false; }
+
     public String getType() {
         return "Deez";
+    }
+
+    public void addTimeMoved() {
+        timesMoved = timesMoved + 1;
+    }
+
+    public void subTimeMoved() {
+        timesMoved = timesMoved - 1;
     }
 
     public boolean badCheckMove(Board board, int row, int col) {
@@ -64,6 +76,8 @@ public class Piece {
         move.undoMove(board);
         return check;
     }
+
+
 
 
 
