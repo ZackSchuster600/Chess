@@ -75,23 +75,24 @@ public class Main {
             }
 
             if(turn % 2 == 0) {
-                if(board.squareContains(oldRow, oldCol).isLegalMove(board, newRow, newCol)) {
-                    if(board.getKing("white").canCastleKingside(board) && oldRow == 7 && oldCol == 4 && newRow == 7 && newCol == 6) {
-                        nextMove = new KingCastleMove(board.getKing("white"));
-                        nextMove.doMove(board);
-                        completedMoves.add(nextMove);
-                        turn = turn + 1;
-                    } else if(board.getKing("white").canCastleQueenside(board) && oldRow == 7 && oldCol == 4 && newRow == 7 && newCol == 2) {
-                        nextMove = new QueenCastleMove(board.getKing("white"));
-                        nextMove.doMove(board);
-                        completedMoves.add(nextMove);
-                        turn = turn + 1;
-                    }
-                    else {
-                        nextMove = new Move(board.squareContains(oldRow, oldCol), newRow, newCol);
-                        nextMove.doMove(board);
-                        completedMoves.add(nextMove);
-                        turn = turn + 1;
+                if(board.squareContains(oldRow, oldCol) != null) {
+                    if (board.squareContains(oldRow, oldCol).isLegalMove(board, newRow, newCol)) {
+                        if (board.getKing("white").canCastleKingside(board) && oldRow == 7 && oldCol == 4 && newRow == 7 && newCol == 6) {
+                            nextMove = new KingCastleMove(board.getKing("white"));
+                            nextMove.doMove(board);
+                            completedMoves.add(nextMove);
+                            turn = turn + 1;
+                        } else if (board.getKing("white").canCastleQueenside(board) && oldRow == 7 && oldCol == 4 && newRow == 7 && newCol == 2) {
+                            nextMove = new QueenCastleMove(board.getKing("white"));
+                            nextMove.doMove(board);
+                            completedMoves.add(nextMove);
+                            turn = turn + 1;
+                        } else {
+                            nextMove = new Move(board.squareContains(oldRow, oldCol), newRow, newCol);
+                            nextMove.doMove(board);
+                            completedMoves.add(nextMove);
+                            turn = turn + 1;
+                        }
                     }
                 }
                 else {
@@ -105,8 +106,8 @@ public class Main {
                     completedMoves.add(nextMove);
                     turn = turn + 1;
                 } **/
-                nextMove = ai.randomMove(board);
-                //nextMove = ai.getBestMove(0, 16, board, new AIPlayer(board, "white"), new Move());
+                //nextMove = ai.randomMove(board);
+                nextMove = ai.getBestMove(0, 2, board, new AIPlayer(board, "white"), new Move());
                 nextMove.doMove(board);
                 completedMoves.add(nextMove);
 

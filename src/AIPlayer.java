@@ -18,30 +18,30 @@ public class AIPlayer {
         Move bestCheckedMove;
 
         if(depth >= depthLimit) {
-            move.setMaxMinimaxValue(heuristicScore(board));
+            move.setMinimaxValue(heuristicScore(board));
         } else {
             for (int i = 0; i < possibleMoves.size(); i++) {
                 Move temp = possibleMoves.get(i);
                 temp.doMove(board);
-                other.getBestMove(depth + 1, depth, board, this, move);
+                other.getBestMove(depth + 1, depth, board, this, temp);
                 temp.undoMove(board);
             }
             if(possibleMoves == null || possibleMoves.isEmpty()) {
-                move.setMaxMinimaxValue(Integer.MIN_VALUE);
+                move.setMinimaxValue(Integer.MIN_VALUE);
             } else {
                 bestCheckedMove = possibleMoves.get(0);
                 for(int i=0; i<possibleMoves.size(); i++) {
-                    if(possibleMoves.get(i).maxMinimaxValue > bestCheckedMove.maxMinimaxValue) {
+                    if(possibleMoves.get(i).minimaxValue > bestCheckedMove.minimaxValue) {
                         bestCheckedMove = possibleMoves.get(i);
                     }
                 }
-                move.setMaxMinimaxValue(bestCheckedMove.maxMinimaxValue);
+                move.setMinimaxValue(bestCheckedMove.minimaxValue);
             }
         }
         if(possibleMoves.size() > 0) {
             Move best = possibleMoves.get(0);
             for(Move possibleMove : possibleMoves) {
-                if(possibleMove.maxMinimaxValue > best.maxMinimaxValue) {
+                if(possibleMove.minimaxValue >= best.minimaxValue) {
                     best = possibleMove;
                 }
             }

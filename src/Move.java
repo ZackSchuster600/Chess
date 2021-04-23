@@ -6,7 +6,7 @@ public class Move {
     int oldCol;
     int newRow;
     int newCol;
-    int maxMinimaxValue;
+    int minimaxValue;
 
     public Move(Piece piece, int newRow, int newCol) {
         thisPiece = piece;
@@ -54,8 +54,8 @@ public class Move {
         board.boardPieces.sort(new PieceComparator());
     }
 
-    public void setMaxMinimaxValue(int value) {
-        this.maxMinimaxValue = value;
+    public void setMinimaxValue(int value) {
+        this.minimaxValue = value;
     }
 
 
